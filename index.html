@@ -165,11 +165,15 @@
 
     document.getElementById("btnStart").classList.add("hidden");
     document.getElementById("btnStop").classList.add("hidden");
-    document.getElementById("btnNext").classList.add("hidden");
+    const btnNext = document.getElementById("btnNext");
 
     if (window.opener && !window.opener.closed) {
       window.opener.postMessage({ type: "QR_SCAN", qr: teksQR }, "*");
-      status("QR terkirim. Tunggu konfirmasi dari aplikasi absensi sebelum memindai siswa berikutnya.", "warning");
+      // Tombol langsung ditampilkan agar petugas bisa lanjut ke siswa berikutnya.
+      btnNext.classList.remove("hidden");
+      btnNext.disabled = false;
+      btnNext.textContent = "➜ MURID SELANJUTNYA";
+      status("QR terkirim. Klik Murid Selanjutnya untuk memindai siswa berikutnya.", "success");
     } else {
       menungguKonfirmasi = false;
       status("Tab absensi tidak terhubung. Buka scanner melalui tombol pada aplikasi utama.", "error");
